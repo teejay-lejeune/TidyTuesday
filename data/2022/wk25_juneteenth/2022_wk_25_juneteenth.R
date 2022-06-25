@@ -14,12 +14,6 @@ census <- tuesdata$census
 slave_routes <- tuesdata$slave_routes
 african_names <- tuesdata$african_names
 
-
-slave_routes %>% 
-  group_by(port_origin) %>% 
-  summarise(num_trips = n()) %>% 
-  arrange(desc(num_trips))
-
 slave_cumsum<-slave_routes %>% 
   select(year_arrival, n_slaves_arrived) %>% 
   filter(is.na(n_slaves_arrived) == FALSE) %>% 
@@ -27,9 +21,6 @@ slave_cumsum<-slave_routes %>%
   summarise(n_slaves_year  = sum(n_slaves_arrived)) %>% 
   ungroup() %>% 
   mutate(n_slaves_total = cumsum(n_slaves_year))
-
-# Do this for curvy lines
-# spline_int <- as.data.frame(spline(slave_cumsum$year_arrival, slave_cumsum$n_slaves_total))
 
 showtext_auto()
 
@@ -76,6 +67,3 @@ ggplot(slave_cumsum) +
                      labels = unit_format(unit = "M", scale = 1e-6)) +
   scale_x_continuous(limits = c(1520, 1875), breaks = seq(1500, 1850, 50))
   
-ggsave("slave_trade_total.png", path = 'C:/Tidy Tuesday 2022 WK 25')
-
-
