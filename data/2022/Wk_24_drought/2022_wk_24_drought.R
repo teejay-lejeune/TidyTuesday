@@ -59,6 +59,3 @@ map_GIF <- animate(drought_map, height = 700, width = 700, fps = 30, duration = 
                    end_pause = 5, renderer = gifski_renderer())
 
 anim_save("dought_map.gif", map_GIF)
-
-post_tweet("My first submission to #tidytuesday. Animating droughts in the US since 2000.")
-
