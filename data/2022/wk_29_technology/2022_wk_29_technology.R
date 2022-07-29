@@ -1,86 +1,12 @@
-library(ggplot2)
-library(tidyverse)
-library(rvest)
-library(janitor)
-library(countrycode)
-library(wbstats)
-library(scales)
 library(reactablefmtr)
 
 technology <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-07-19/technology.csv')
 labels <- technology %>% distinct(variable, label)
 
-# Get country names using 'countrycode' package
-technology <- technology %>% 
-  filter(iso3c != "XCD") %>% 
-  mutate(iso3c = recode(iso3c, "ROM" = "ROU"),
-         country = countrycode(iso3c, origin = "iso3c", destination = "country.name"),
-         country = case_when(
-           iso3c == "ANT" ~ "Netherlands Antilles",
-           iso3c == "CSK" ~ "Czechoslovakia",
-           iso3c == "XKX" ~ "Kosovo",
-           TRUE           ~ country))
-
-# Get region data ready to join
-wb_data <- wb_countries() %>% 
-  select(iso3c, region) %>% 
-  filter(region != "Aggregates")
-
-# Join region data with technology
-tech_region2 <- full_join(technology, wb_data, by = "iso3c") 
-
-# Create vector for rail variables
-rail <- c('railline', 'railline_wdi', 'railp', 'railpkm', 'railt', 'railtkm')
-
-# Create table for railway data
-rail_data <- tech_region2 %>% 
-  filter(variable %in% rail & !is.na(region))
-
-points <- rail_data %>% 
-  filter(variable == "railp") %>% 
-  group_by(year, region) %>% 
-  summarise(mean_railp = mean(value)) %>% 
-  ungroup() %>% 
-  filter(year %in% c(seq(1840, 1990, 10)))
-
-rail_data %>% 
-  filter(variable == "railp") %>% 
-  group_by(year, region) %>% 
-  summarise(mean_railp = mean(value)) %>% 
-  ggplot(aes(x = year, y = mean_railp, group = region)) +
-  geom_line(size = 3) +
-  geom_point(data = points, aes(x = year, y = mean_railp), 
-             shape = 21, size = 2.75, color = "red", fill = "white", stroke = 1.5) +
-  facet_grid(rows = vars(region), scales = "free_y")
-             
-             
-
-pop <- read_xlsx('C:/Datasets/WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT_REV1.xlsx',
-                sheet = "Estimates",
-                range = "A17:L20613",
-                col_types = c("numeric", "text", "text", "text", "numeric", "text", "text", "numeric", "text", "numeric", "numeric", "numeric")
-                )
-
-pop <- pop %>% clean_names()
-
-left_join(rail_data, pop, by = c("iso3c" = "iso3_alpha_code", "year")) %>%
-  rename(population = total_population_as_of_1_january_thousands) %>% 
-  select(variable:region, population) %>% 
-  filter(variable == "railp" & !is.na(population)) %>% 
-  group_by(year, region) %>% 
-  summarise(mean_railp = mean(value),
-            mean_pop = mean(population)) %>% 
-  ggplot(aes(x = year, y = mean_railp, group = region)) +
-  geom_line() +
-  facet_grid(rows = vars(region), scales = "free_y")
-
-################################################################################
-
 elec <- labels$variable[46:56]
 
 electricity <- technology %>% 
   filter(variable %in% elec)
-
 
 pct_elec <- electricity %>% 
   select(variable, year, value, country) %>% 
@@ -99,7 +25,6 @@ pct_elec <- electricity %>%
 
 pct_elec_20 <- pct_elec %>% 
   filter(year == 2020)
-
 
 pct_elec_15 <- pct_elec %>% 
   filter(year == 2015) %>% 
