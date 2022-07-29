@@ -1,4 +1,4 @@
-library(tidyvers)
+library(tidyverse)
 library(countrycode)
 library(reactablefmtr)
 library(viridis)
@@ -141,15 +141,13 @@ table <- elec_table %>%
                 cell = pill_buttons(., number_fmt = function(value) paste0(sprintf("%+.2f", value), "%"), colors = "transparent", opacity = 0, bold_text = TRUE, text_color_ref = "pct_change_col")
               ),
               pct_change_col = colDef(show = FALSE)
-              
-            )
-            
+            )           
   ) %>%
   google_font(font_family = "Chakra Petch", font_weight = 300) %>% 
   add_title(title = "Which Country Uses The Most Renewable Energy?") %>% 
   add_subtitle(subtitle = "by % of total energy output") %>% 
   add_source(source = "TJ LeJeune   |   TidyTuesday Week 29   |   Source: data.nber.org")
 
-  save_reactable_test(table, "tech_table.html")
-  save_reactable_test(table, "tech_table_pic.png")
+save_reactable_test(table, "tech_table.html")
+webshot2::webshot("tech_table.html", "tech_table.png", vwidth = 1700)
 
