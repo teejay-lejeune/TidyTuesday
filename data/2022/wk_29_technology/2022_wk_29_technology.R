@@ -1,7 +1,20 @@
+library(tidyvers)
+library(countrycode)
 library(reactablefmtr)
 
 technology <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-07-19/technology.csv')
 labels <- technology %>% distinct(variable, label)
+
+# Get country names using 'countrycode' package
+technology <- technology %>% 
+  filter(iso3c != "XCD") %>% 
+  mutate(iso3c = recode(iso3c, "ROM" = "ROU"),
+         country = countrycode(iso3c, origin = "iso3c", destination = "country.name"),
+         country = case_when(
+           iso3c == "ANT" ~ "Netherlands Antilles",
+           iso3c == "CSK" ~ "Czechoslovakia",
+           iso3c == "XKX" ~ "Kosovo",
+           TRUE           ~ country))
 
 elec <- labels$variable[46:56]
 
