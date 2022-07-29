@@ -1,6 +1,7 @@
 library(tidyvers)
 library(countrycode)
 library(reactablefmtr)
+library(viridis)
 
 technology <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-07-19/technology.csv')
 labels <- technology %>% distinct(variable, label)
