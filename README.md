@@ -13,10 +13,11 @@ A weekly data project aimed at the R ecosystem. As this project was borne out of
 ![](https://user-images.githubusercontent.com/58889508/179564248-f4c16d4f-3670-4b38-b0a6-9b80a27b6403.png)
 
 ### Week 25 [Drought](https://github.com/teejay-lejeune/TidyTuesday/blob/main/data/2022/Wk_24_drought/2022_wk_24_drought.R)
-![dought_map](https://user-images.githubusercontent.com/58889508/179564113-094a8ecf-d1a6-43b1-91f2-867fe3a4a2bd.gif)
+![](https://user-images.githubusercontent.com/58889508/179564113-094a8ecf-d1a6-43b1-91f2-867fe3a4a2bd.gif)
 
 ### Week 22 [Company Reputation (Bump Chart)](https://github.com/teejay-lejeune/TidyTuesday/blob/main/data/2022/wk_22_company_reputation/industry_rank_change_bump.R)
-![](https://github.com/teejay-lejeune/TidyTuesday/files/9133861/industry_rankings_bump.pdf)
+![](https://github.com/teejay-lejeune/TidyTuesday/blob/main/data/2022/wk_22_company_reputation/industry_rankings_bump.pdf)
 
-### Week 22 [Company Reputation (Lollipop Chart)] (https://github.com/teejay-lejeune/TidyTuesday/blob/main/data/2022/wk_22_company_reputation/rank_change_dot.R) 
+### Week 22 [Company Reputation](https://github.com/teejay-lejeune/TidyTuesday/blob/main/data/2022/wk_22_company_reputation/rank_change_dot.R) 
+![](https://github.com/teejay-lejeune/TidyTuesday/blob/main/data/2022/wk_22_company_reputation/rank_change_dot.png)
 
